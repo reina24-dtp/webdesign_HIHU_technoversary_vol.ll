@@ -181,13 +181,38 @@ function ProductCard({ p }) {
 }
 
 function Featured() {
+  const [active, setActive] = useState(1);
+  const [size, setSize] = useState("Sedang");
+  const go = (step) => setActive((current) => (current + step + PRODUCTS.length) % PRODUCTS.length);
+  const product = PRODUCTS[active];
   return (
-    <section id="produk" className="dots">
-      <div className="panel">
-        <h2 className="panel-title">Produk Pilihan</h2>
-        <div className="grid grid-3">
-          {PRODUCTS.slice(0, 3).map((p) => <ProductCard key={p.id} p={p} />)}
+    <section id="produk" className="featured-section">
+      <div className="featured-shell">
+        <div className="featured-heading">
+          <div><span className="featured-kicker">Dari karung jadi kesayangan</span><h2 className="panel-title">Produk Pilihan</h2></div>
+          <p>Motif ceria, dibuat ulang dengan cerita baru.</p>
         </div>
+        <div className="featured-stage">
+          <div className="featured-orbit" aria-hidden="true" />
+          {[-2, -1, 1, 2].map((offset) => {
+            const side = PRODUCTS[(active + offset + PRODUCTS.length) % PRODUCTS.length];
+            return <button key={`${offset}-${side.id}`} className={`peek-card peek-${offset < 0 ? "left" : "right"} peek-${Math.abs(offset)}`} onClick={() => go(offset)} aria-label={`Lihat ${side.name}`}>
+              <Img src={side.img} alt={`Tas ${side.name}`} className="peek-img" fallback={side.color} />
+              <span className="peek-title">{side.name}</span><span className="peek-meta">{side.tag} · {side.price}</span>
+            </button>;
+          })}
+          <article className="featured-product" key={product.id}>
+            <div className="featured-photo-wrap"><Img src={product.img} alt={`Tas ${product.name}`} className="featured-photo" fallback={product.color} />
+              <button className="carousel-arrow arrow-left" onClick={() => go(-1)} aria-label="Produk sebelumnya">‹</button>
+              <button className="carousel-arrow arrow-right" onClick={() => go(1)} aria-label="Produk berikutnya">›</button>
+            </div>
+            <div className="featured-info"><span className="featured-tag">{product.tag} · Recrafted</span><h3>{product.name}</h3><strong className="featured-price">{product.price}</strong>
+              <label className="size-select">Ukuran tas<select value={size} onChange={(event) => setSize(event.target.value)}><option>Kecil</option><option>Sedang</option><option>Besar</option></select></label>
+              <a className="featured-order" href={`${WA}%20untuk%20produk%20${encodeURIComponent(product.name)}%20ukuran%20${encodeURIComponent(size)}`}>Pesan tas ini <span>↗</span></a>
+            </div>
+          </article>
+        </div>
+        <div className="featured-controls"><div className="featured-dots" aria-label={`Produk ${active + 1} dari ${PRODUCTS.length}`}>{PRODUCTS.map((p, i) => <button key={p.id} className={i === active ? "active" : ""} onClick={() => setActive(i)} aria-label={`Pilih ${p.name}`} />)}</div><span>{String(active + 1).padStart(2, "0")} <i>/</i> {String(PRODUCTS.length).padStart(2, "0")}</span></div>
       </div>
     </section>
   );
