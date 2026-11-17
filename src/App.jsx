@@ -3,9 +3,9 @@ import "./App.css";
 
 /* ====== GANTI PATH GAMBAR DENGAN ASET KAMU (taruh di folder /public/images) ====== */
 const IMG = {
-  logo: "/images/logo-granova.png",
-  heroBag: "/images/tas-hero.png",
-  story: "/images/koleksi-tas.png",
+  logo: "public/images/granova.png",
+  heroBag: "public/images/hero-asset.png",
+  story: "public/images/about.png",
 };
 
 const NAV_LEFT = [

@@ -206,3 +206,6 @@ a { color: inherit; text-decoration: none; }
   .peek-left.peek-1 { left: 0; transform: rotate(-3deg); }
   .peek-right.peek-1 { right: 0; transform: rotate(3deg); }
 }
+@media (prefers-reduced-motion: reduce) {
+  .featured-product { animation: none; transition: none; }
+}
