@@ -46,7 +46,7 @@ const STEPS = [
 ];
 
 const TESTIMONIALS = [
-  { name: "Nadia", role: "Mahasiswi", text: "Motifnya lucu banget, dan aku suka karena tasnya dari bahan bekas. Kuat dipakai bawa buku." },
+  { name: "Kak Ryujin", role: "Mahasiswi", image: "/images/Kak%20Ryujin.jpg", text: "Motifnya lucu banget, dan aku suka karena tasnya dari bahan bekas. Kuat dipakai bawa buku." },
   { name: "Kak Jojo", role: "Pelanggan", image: "/images/kak%20jojo.jpg", text: "Dipakai buat kado, penerimanya senang. Jahitannya rapi dan ceritanya bagus." },
   { name: "Bu Sari", role: "Guru", text: "Cocok untuk suvenir kegiatan sekolah tentang daur ulang. Anak-anak suka." },
 ];
@@ -345,6 +345,25 @@ function Cta() {
   );
 }
 
+function OrderNow() {
+  const repeat = (keyPrefix) => Array.from({ length: 12 }, (_, i) => (
+    <span className="order-word" key={`${keyPrefix}-${i}`}>ORDER NOW <i aria-hidden="true">✦</i> GRANOVA</span>
+  ));
+  return (
+    <section className="order-now" aria-label="Pesan tas Granova">
+      <a className="order-now-link" href={WA} aria-label="Order now, pesan tas Granova">
+        <div className="order-ribbon" aria-hidden="true">
+          <div className="order-track">
+            <div className="order-group">{repeat("first")}</div>
+            <div className="order-group">{repeat("second")}</div>
+          </div>
+        </div>
+        <Img src="/images/Hijabi%20Woman%20with%20Cat-Print%20Drawstring%20Bag.png" alt="" className="order-photo" />
+      </a>
+    </section>
+  );
+}
+
 
 export default function App() {
   return (
@@ -359,6 +378,7 @@ export default function App() {
         <Care />
         <Testimonials />
         <Faq />
+        <OrderNow />
         <Cta />
       </main>
       <Footer logo={IMG.logo} links={[...NAV_LEFT, ...NAV_RIGHT]} wa={WA} />
