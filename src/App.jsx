@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Featured from "./Featured.jsx";
 import Catalog from "./Catalog.jsx";            
@@ -46,7 +46,7 @@ const STEPS = [
 
 const TESTIMONIALS = [
   { name: "Nadia", role: "Mahasiswi", text: "Motifnya lucu banget, dan aku suka karena tasnya dari bahan bekas. Kuat dipakai bawa buku." },
-  { name: "Rizky", role: "Pelanggan", text: "Dipakai buat kado, penerimanya senang. Jahitannya rapi dan ceritanya bagus." },
+  { name: "Kak Jojo", role: "Pelanggan", image: "/images/kak%20jojo.jpg", text: "Dipakai buat kado, penerimanya senang. Jahitannya rapi dan ceritanya bagus." },
   { name: "Bu Sari", role: "Guru", text: "Cocok untuk suvenir kegiatan sekolah tentang daur ulang. Anak-anak suka." },
 ];
 
@@ -67,11 +67,26 @@ function Img({ src, alt, className, fallback = "#EADFCF" }) {
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const previousScrollY = useRef(0);
+  const [scrolled, setScrolled] = useState(() => window.scrollY > 40);
+  useEffect(() => {
+    previousScrollY.current = window.scrollY;
+    const updateScrollState = () => {
+      const currentScrollY = window.scrollY;
+      const difference = currentScrollY - previousScrollY.current;
+      if (currentScrollY <= 40) setScrolled(false);
+      else if (difference > 2) setScrolled(true);
+      else if (difference < -2) setScrolled(false);
+      previousScrollY.current = currentScrollY;
+    };
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
   const link = (l) => (
     <a key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</a>
   );
   return (
-    <header className="nav-wrap">
+    <header className={`nav-wrap${scrolled ? " is-scrolled" : ""}`}>
       <nav className="nav" aria-label="Navigasi utama">
         <div className="nav-links">{NAV_LEFT.map(link)}</div>
         <a href="#home" className="nav-logo" aria-label="Granova Recraft">
@@ -105,9 +120,40 @@ function ArrowButton({ href, children }) {
 }
 
 function Hero() {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const [typedLength, setTypedLength] = useState(prefersReducedMotion ? 7 : 0);
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    let length = 0;
+    let deleting = false;
+    let timeoutId;
+    const tick = () => {
+      if (deleting) {
+        length -= 1;
+        setTypedLength(length);
+        if (length === 0) {
+          deleting = false;
+          timeoutId = window.setTimeout(tick, 450);
+        } else {
+          timeoutId = window.setTimeout(tick, 110);
+        }
+        return;
+      }
+      length += 1;
+      setTypedLength(length);
+      if (length === 7) {
+        deleting = true;
+        timeoutId = window.setTimeout(tick, 900);
+      } else {
+        timeoutId = window.setTimeout(tick, 180);
+      }
+    };
+    timeoutId = window.setTimeout(tick, 250);
+    return () => window.clearTimeout(timeoutId);
+  }, [prefersReducedMotion]);
   return (
     <section id="home" className="hero">
-      <span className="hero-watermark" aria-hidden="true">GRANOVA</span>
+      <span className="hero-watermark" aria-hidden="true">{"GRANOVA".slice(0, typedLength)}</span>
       <div className="hero-left">
         <p className="script">dijahit dari karung bekas</p>
         <h1>Dari karung, jadi cerita.</h1>
@@ -146,19 +192,49 @@ function WaveBand() {
 }
 
 function Story() {
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    }, { threshold: 0.15 });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
   return (
-    <section id="tentang" className="story">
-      <Img src={IMG.story} alt="Koleksi tas serut Granova" className="story-photo" fallback="#EADFCF" />
+    <section id="tentang" ref={sectionRef} className={`story${isVisible ? " is-visible" : ""}`}>
       <div className="story-title">
         <span>Cerita dibalik</span>
         <h2>Granova</h2>
       </div>
+      <div className="story-gallery" aria-label="Tiga pilihan tas Granova">
+        <div className="story-wave" aria-hidden="true">
+          <svg viewBox="0 0 1000 400" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="storyWaveFill" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#f6b7d8" />
+                <stop offset="100%" stopColor="#e987b6" />
+              </linearGradient>
+            </defs>
+            <path d="M0 82 C105 25 165 111 275 72 C382 34 444 50 535 79 C642 113 700 29 808 57 C890 78 941 38 1000 62 L1000 316 C907 350 850 286 758 324 C651 368 590 302 500 330 C404 360 340 302 250 331 C157 360 76 303 0 326 Z" fill="url(#storyWaveFill)" />
+          </svg>
+        </div>
+        <Img src="/images/p2.png" alt="Tas Granova motif Hello Summer" className="story-side story-side-left" />
+        <Img src={IMG.heroBag} alt="Tas Granova motif This Is My Happy Place" className="story-photo" />
+        <Img src="/images/p3.png" alt="Tas Granova motif Save Our City" className="story-side story-side-right" />
+      </div>
       <div className="story-body">
-        <p>
-          Granova Recraft bermula dari tumpukan karung bekas yang biasanya dibuang. Kami mencucinya,
-          menjahitnya menjadi tas serut, lalu memberinya motif yang membuat siapa pun senang membawanya.
-        </p>
-        <p>Setiap tas punya sejarahnya sendiri: pernah berisi beras, tepung, atau gula, sekarang menemani harimu.</p>
+        <div className="story-copy">
+          <span className="story-kicker">Cerita dan filosofi Granova</span>
+          <h3>Lebih dari Sekadar Tas</h3>
+          <p>
+            Granova Recraft bermula dari tumpukan karung bekas yang biasanya dibuang. Kami mencucinya,
+            menjahitnya menjadi tas serut, lalu memberinya motif yang membuat siapa pun senang membawanya.
+          </p>
+          <p>Setiap tas punya sejarahnya sendiri: pernah berisi beras, tepung, atau gula, sekarang menemani harimu.</p>
+        </div>
         <ul className="stats">
           {STATS.map((s) => (
             <li key={s.label}>
@@ -185,8 +261,19 @@ function ProductCard({ p }) {
 function Care() {
   return (
     <section id="cara-menjaga" className="section care">
-      <h2 className="section-title">Cara Menjaga</h2>
-      <p className="section-sub">Rawat tasmu agar bisa menemanimu bertahun-tahun.</p>
+      <div className="care-banner">
+        <div className="care-photo-wrap">
+          <Img src="/images/Hijabi%20Woman%20with%20Whale%20Drawstring%20Bag.png" alt="Perempuan berhijab membawa tas serut Granova motif paus" className="care-photo" />
+          <span className="care-spark care-spark-one" aria-hidden="true">✳</span>
+          <span className="care-spark care-spark-two" aria-hidden="true">✦</span>
+        </div>
+        <div className="care-intro">
+          <span className="care-kicker">Granova care guide · 4 langkah mudah</span>
+          <h2>Cara Menjaga</h2>
+          <p>Rawat tasmu dengan lembut agar motif tetap cerah dan bisa menemanimu lebih lama.</p>
+          <span className="care-note"><i /> Kebiasaan kecil, umur tas lebih panjang</span>
+        </div>
+      </div>
       <ol className="steps">
         {STEPS.map((s, i) => (
           <li key={s.title}>
@@ -201,20 +288,28 @@ function Care() {
 }
 
 function Testimonials() {
-  const [i, setI] = useState(0);
-  const t = TESTIMONIALS[i];
-  const go = (d) => setI((i + d + TESTIMONIALS.length) % TESTIMONIALS.length);
+  const renderCards = (duplicate = false) => TESTIMONIALS.map((t) => (
+    <article className="testi-card" key={`${duplicate ? "copy-" : ""}${t.name}`} aria-hidden={duplicate || undefined}>
+      <p className="testi-card-quote">“{t.text}”</p>
+      <div className="testi-card-meta">
+        {t.image ? <img className="testi-avatar-photo" src={t.image} alt={`Foto ${t.name}`} /> : <span className="testi-avatar" aria-hidden="true">{t.name.charAt(0)}</span>}
+        <span className="testi-person"><strong>{t.name}</strong><small>{t.role}</small></span>
+        <span className="testi-stars" aria-label="5 dari 5 bintang">★★★★★</span>
+      </div>
+    </article>
+  ));
   return (
-    <section id="testimoni" className="section testi">
-      <h2 className="section-title">Testimoni</h2>
-      <figure className="quote" aria-live="polite">
-        <blockquote>“{t.text}”</blockquote>
-        <figcaption>{t.name}, {t.role}</figcaption>
-      </figure>
-      <div className="testi-ctrl">
-        <button onClick={() => go(-1)} aria-label="Testimoni sebelumnya">←</button>
-        <span>{i + 1} / {TESTIMONIALS.length}</span>
-        <button onClick={() => go(1)} aria-label="Testimoni berikutnya">→</button>
+    <section id="testimoni" className="section testi testimonials-conveyor">
+      <div className="testi-head">
+        <span>ULASAN PELANGGAN</span>
+        <h2>Apa Kata Mereka</h2>
+        <p><strong aria-label="5 bintang">★★★★★</strong> Dari pelanggan Granova</p>
+      </div>
+      <div className="testi-window">
+        <div className="testi-track">
+          <div className="testi-group">{renderCards()}</div>
+          <div className="testi-group" aria-hidden="true">{renderCards(true)}</div>
+        </div>
       </div>
     </section>
   );
