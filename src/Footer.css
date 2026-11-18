@@ -1,32 +1,43 @@
-/* ===== FOOTER (versi ringkas) ===== */
-/* rapatkan jarak bawah section CTA di atas footer (hapus baris ini kalau tidak perlu) */
-.cta { padding-bottom: 64px; }
-
-.ft { background: var(--brown); color: #f0e4d4; padding: 0 8vw 28px; text-align: center; }
-.ft-stitch { max-width: 1100px; margin: 0 auto; border-top: 3px dashed rgba(245, 238, 227, .35); }
-
-.ft-inner { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 40px 0 28px; }
-.ft-logo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: #fff; }
-.ft-tagline { margin: -10px 0 0; font: 400 22px var(--script); color: #f58fc0; }
-
-.ft-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 30px; font: 400 16px var(--ui); }
-.ft-links a { transition: color .2s; }
-.ft-links a:hover { color: #f6b7d8; }
-
-.ft-social { list-style: none; margin: 0; padding: 0; display: flex; gap: 12px; }
-.ft-icon {
-  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
-  border: 2px solid rgba(245, 238, 227, .4); color: var(--cream);
-  transition: background .2s, border-color .2s, transform .2s;
+/* Footer mengikuti layout kolom sederhana Granova */
+.ft {
+  background: var(--brown);
+  color: var(--cream);
+  padding: 48px 7vw 38px;
 }
-.ft-icon:hover { background: var(--pink); border-color: var(--pink); color: #fff; transform: translateY(-2px); }
-.ft-icon-main { background: var(--pink); border-color: var(--pink); color: #fff; }
-.ft-icon-main:hover { background: var(--cream); border-color: var(--cream); color: var(--brown); }
-.ft a:focus-visible { outline: 3px solid #f58fc0; outline-offset: 3px; border-radius: 6px; }
+.ft-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.4fr) repeat(2, minmax(130px, .8fr)) minmax(190px, 1.1fr);
+  gap: clamp(28px, 5vw, 72px);
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+.ft-brand-block { display: flex; flex-direction: column; align-items: flex-start; }
+.ft-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--cream); font: 700 22px var(--serif); }
+.ft-logo { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: #fff; }
+.ft-tagline { margin: 12px 0 28px; color: #f58fc0; font: 400 18px var(--script); }
+.ft-copy { margin-top: auto; color: rgba(245, 238, 227, .68); font: 400 12px var(--ui); }
+.ft-column h2 { margin: 2px 0 18px; color: var(--cream); font: 700 13px var(--ui); letter-spacing: .08em; text-transform: uppercase; }
+.ft-column ul { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; }
+.ft-column li, .ft-column p, .ft-column a { color: rgba(245, 238, 227, .82); font: 400 14px/1.55 var(--ui); }
+.ft-column a { transition: color .2s ease; }
+.ft-column a:hover { color: #f6b7d8; }
+.ft-contact-column p { margin: 0 0 16px; max-width: 230px; }
+.ft-contact { display: inline-flex; align-items: center; gap: 8px; color: #f6b7d8 !important; font-weight: 700 !important; }
+.ft-contact span { font-size: 17px; transition: transform .2s ease; }
+.ft-contact:hover span { transform: translate(2px, -2px); }
+.ft a:focus-visible { outline: 3px solid #f58fc0; outline-offset: 4px; border-radius: 4px; }
 
-.ft-copy { display: block; font: 400 13px var(--ui); opacity: .75; }
-
+@media (max-width: 760px) {
+  .ft { padding: 38px 6vw 30px; }
+  .ft-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 26px; }
+  .ft-brand-block { grid-column: 1 / -1; }
+  .ft-tagline { margin-bottom: 14px; }
+}
+@media (max-width: 420px) {
+  .ft-grid { grid-template-columns: 1fr 1fr; gap: 28px 18px; }
+  .ft-brand { font-size: 19px; }
+  .ft-column li, .ft-column p, .ft-column a { font-size: 13px; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .ft-links a, .ft-icon { transition: none; }
-  .ft-icon:hover { transform: none; }
+  .ft-column a, .ft-contact span { transition: none; }
 }
