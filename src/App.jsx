@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Featured from "./Featured.jsx";
-import Catalog from "./Catalog.jsx";            
+import Catalog from "./Catalog.jsx"; 
+import Footer from "./Footer.jsx";           
 
 /* ====== GANTI PATH GAMBAR DENGAN ASET KAMU (taruh di folder /public/images) ====== */
 const IMG = {
@@ -344,17 +345,6 @@ function Cta() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="footer">
-      <Img src={IMG.logo} alt="Logo Granova" className="footer-logo" fallback="#fff" />
-      <nav aria-label="Footer">
-        {[...NAV_LEFT, ...NAV_RIGHT].map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
-      </nav>
-      <small>© {new Date().getFullYear()} Granova Recraft. Dijahit dari karung bekas.</small>
-    </footer>
-  );
-}
 
 export default function App() {
   return (
@@ -371,7 +361,7 @@ export default function App() {
         <Faq />
         <Cta />
       </main>
-      <Footer />
+      <Footer logo={IMG.logo} links={[...NAV_LEFT, ...NAV_RIGHT]} wa={WA} />
     </>
   );
 }

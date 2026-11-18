@@ -1,4 +1,4 @@
-/* ===== PRODUK PILIHAN: JEMURAN (tempel di paling bawah App.css) ===== */
+/* ===== PRODUK PILIHAN: JEMURAN ===== */
 .jm-section {
   position: relative; overflow: hidden; color: var(--cream);
   padding: 84px 5vw 88px;
@@ -9,23 +9,38 @@
 }
 .jm-head { text-align: center; max-width: 640px; margin: 0 auto 64px; }
 .jm-head h2 { margin: 0; font-family: var(--serif); font-weight: 700; font-size: clamp(32px, 4.6vw, 48px); line-height: 1.1; }
-.jm-sub { margin: 8px 0 0; font-family: var(--script); color: #f58fc0; font-size: 22px; }
+.jm-sub { margin: 8px 0 0; font-family: var(--script); color: #f58fc0; font-size: clamp(18px, 3vw, 22px); }
 
-.jm-line { position: relative; max-width: 1040px; margin: 0 auto; }
+/* Semua ukuran di dalam .jm-items memakai em, jadi seluruh jemuran
+   mengecil/membesar proporsional mengikuti lebar kontainer. */
+.jm-line { position: relative; max-width: 1040px; margin: 0 auto; container-type: inline-size; }
 .jm-rope {
+<<<<<<< HEAD
   position: absolute; left: -5vw; right: -5vw; top: 0; height: 48px; pointer-events: none;
 }
 .jm-rope svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 2px 1px rgba(0,0,0,.22)); }
 .jm-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
 .jm-item { position: relative; display: flex; flex-direction: column; align-items: center; transform-origin: 50% 0; transition: transform .55s cubic-bezier(.22,.8,.25,1); will-change: transform; }
 .jm-mid { margin-top: 44px; }
+=======
+  position: absolute; left: -5vw; right: -5vw; top: 0; height: .25em; min-height: 3px; border-radius: 4px;
+  background: linear-gradient(#d8b98a, #a8814f); box-shadow: 0 3px 0 rgba(0,0,0,.25);
+}
+.jm-items { font-size: clamp(9px, 1.55cqw, 16px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75em; align-items: start; }
+.jm-item { position: relative; }          /* area hover: diam, tidak ikut bergerak */
+.jm-mid { margin-top: 2.75em; }
+
+/* bagian yang bergerak: jepitan + foto */
+.jm-swinger { display: flex; flex-direction: column; align-items: center; transform-origin: 50% 0; }
+>>>>>>> 7482f690ccf31d46416a724c3f74bc2ad112aeae
 
 .jm-pin {
-  position: relative; z-index: 2; width: 16px; height: 46px; margin: -10px 0 -26px; border-radius: 4px 4px 6px 6px;
+  position: relative; z-index: 2; width: 1em; height: 2.9em; margin: -.6em 0 -1.6em; border-radius: .25em .25em .4em .4em;
   background: linear-gradient(90deg, #e7c795, #c79a5c); box-shadow: 0 2px 0 rgba(0,0,0,.25);
 }
-.jm-pin::after { content: ""; position: absolute; left: 3px; right: 3px; top: 14px; height: 3px; background: rgba(0,0,0,.28); border-radius: 2px; }
+.jm-pin::after { content: ""; position: absolute; left: .2em; right: .2em; top: .9em; height: .2em; background: rgba(0,0,0,.28); border-radius: 2px; }
 
+<<<<<<< HEAD
 /* foto dicetak seperti polaroid yang dijepit di tali */
 .jm-print { width: min(100%, 270px); background: var(--cream); color: var(--brown); border-radius: 10px; padding: 12px 12px 18px; box-shadow: 0 14px 24px rgba(0,0,0,.35); }
 .jm-print { transform-origin: 50% 0; will-change: transform; }
@@ -45,17 +60,55 @@
 .jm-item:hover .jm-print, .jm-item:focus-within .jm-print { animation: jm-print-sway 1.8s ease-in-out infinite; }
 @keyframes jm-swing { 0% { transform: rotate(-4deg); } 28% { transform: rotate(2.4deg); } 52% { transform: rotate(-1.2deg); } 72% { transform: rotate(.5deg); } 88% { transform: rotate(-.2deg); } 100% { transform: rotate(0); } }
 @keyframes jm-print-sway { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-1.8deg); } 75% { transform: rotate(1.8deg); } }
+=======
+/* foto dicetak seperti polaroid */
+.jm-print {
+  width: 82%; background: var(--cream); color: var(--brown); border-radius: .6em; padding: .75em .75em 1.1em;
+  box-shadow: 0 .9em 1.5em rgba(0,0,0,.35); transition: transform .35s ease, box-shadow .35s ease;
+}
+.jm-mid .jm-print { width: 94%; }
+.jm-photo { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: .4em; }
+.jm-caption { padding: .75em .4em 0; }
+.jm-label { margin: 0; font-family: var(--script); font-weight: 700; font-size: 1.15em; color: var(--pink); line-height: 1.1; }
+.jm-caption h3 { margin: .1em 0 0; font-family: var(--serif); font-size: 1.375em; line-height: 1.15; }
+.jm-foot { display: flex; align-items: center; justify-content: space-between; gap: .5em; margin-top: .75em; padding-top: .75em; border-top: .125em dashed #cdbba0; }
+.jm-price { font: 700 .95em var(--ui); color: #2f7a5e; }
+.jm-btn { font: 700 .85em var(--ui); color: var(--cream); background: var(--brown); padding: .6em 1.1em; border-radius: 999px; transition: background .2s; }
+.jm-btn:hover { background: var(--pink); }
+
+/* GERAK: tertiup angin terus-menerus, tiap foto beda tempo */
+.jm-swing .jm-swinger {
+  animation:
+    jm-swing 1.8s cubic-bezier(.3,.6,.4,1) var(--d, 0s) both,
+    jm-sway var(--t, 5s) ease-in-out calc(1.8s + var(--d, 0s)) infinite;
+}
+.jm-item:nth-child(1) { --t: 5.2s; }
+.jm-item:nth-child(2) { --t: 6.1s; }
+.jm-item:nth-child(3) { --t: 5.6s; }
+@keyframes jm-swing { 0% { transform: rotate(-7deg); } 20% { transform: rotate(5deg); } 40% { transform: rotate(-3deg); } 60% { transform: rotate(1.8deg); } 80% { transform: rotate(-.8deg); } 100% { transform: rotate(0); } }
+@keyframes jm-sway { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(2.2deg); } 75% { transform: rotate(-2.2deg); } }
+
+/* HOVER: ayunan berhenti pelan, foto terangkat (area hover tidak berubah, jadi tidak kedat-kedut) */
+.jm-item:hover .jm-swinger, .jm-item:focus-within .jm-swinger { animation-play-state: paused; }
+.jm-item:hover .jm-print, .jm-item:focus-within .jm-print { transform: translateY(-.5em) scale(1.03); box-shadow: 0 1.5em 2em rgba(0,0,0,.4); }
+>>>>>>> 7482f690ccf31d46416a724c3f74bc2ad112aeae
 
 .jm-more { text-align: center; margin-top: 72px; }
-.jm-more p { margin: 0 0 14px; font-family: var(--script); font-size: 22px; color: #f58fc0; }
+.jm-more p { margin: 0 0 14px; font-family: var(--script); font-size: clamp(18px, 3vw, 22px); color: #f58fc0; }
 .jm-cta { display: inline-flex; align-items: center; gap: 14px; background: var(--cream); color: var(--brown); font: 700 15px var(--serif); padding: 8px 8px 8px 26px; border-radius: 999px; }
 .jm-cta-circle { width: 42px; height: 42px; border-radius: 50%; background: var(--pink); color: #fff; display: grid; place-items: center; font-size: 20px; transition: transform .25s; }
 .jm-cta:hover .jm-cta-circle { transform: rotate(45deg); }
 .jm-btn:focus-visible, .jm-cta:focus-visible { outline: 3px solid #f58fc0; outline-offset: 3px; }
 
-@media (max-width: 820px) {
+/* kontainer sempit: tombol turun ke bawah harga, tampilan tetap sama */
+@container (max-width: 560px) {
+  .jm-foot { flex-direction: column; align-items: flex-start; gap: .5em; }
+  .jm-btn { align-self: stretch; text-align: center; }
+}
+@media (max-width: 600px) {
   .jm-section { padding: 56px 6vw 64px; }
   .jm-head { margin-bottom: 44px; }
+<<<<<<< HEAD
   .jm-rope { display: none; }
   .jm-items { grid-template-columns: 1fr; gap: 56px; }
   .jm-mid { margin-top: 0; }
@@ -67,5 +120,13 @@
   .jm-item:hover .jm-print, .jm-item:focus-within .jm-print { animation: none; }
   .jm-item { transition: none; }
   .jm-item:hover, .jm-item:focus-within { transform: none; }
+=======
+  .jm-more { margin-top: 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jm-swing .jm-swinger { animation: none; }
+  .jm-print { transition: none; }
+  .jm-item:hover .jm-print, .jm-item:focus-within .jm-print { transform: none; }
+>>>>>>> 7482f690ccf31d46416a724c3f74bc2ad112aeae
   .jm-cta:hover .jm-cta-circle { transform: none; }
 }

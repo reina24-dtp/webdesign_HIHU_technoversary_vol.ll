@@ -1,0 +1,32 @@
+/* ===== FOOTER (versi ringkas) ===== */
+/* rapatkan jarak bawah section CTA di atas footer (hapus baris ini kalau tidak perlu) */
+.cta { padding-bottom: 64px; }
+
+.ft { background: var(--brown); color: #f0e4d4; padding: 0 8vw 28px; text-align: center; }
+.ft-stitch { max-width: 1100px; margin: 0 auto; border-top: 3px dashed rgba(245, 238, 227, .35); }
+
+.ft-inner { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 40px 0 28px; }
+.ft-logo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: #fff; }
+.ft-tagline { margin: -10px 0 0; font: 400 22px var(--script); color: #f58fc0; }
+
+.ft-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 30px; font: 400 16px var(--ui); }
+.ft-links a { transition: color .2s; }
+.ft-links a:hover { color: #f6b7d8; }
+
+.ft-social { list-style: none; margin: 0; padding: 0; display: flex; gap: 12px; }
+.ft-icon {
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  border: 2px solid rgba(245, 238, 227, .4); color: var(--cream);
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.ft-icon:hover { background: var(--pink); border-color: var(--pink); color: #fff; transform: translateY(-2px); }
+.ft-icon-main { background: var(--pink); border-color: var(--pink); color: #fff; }
+.ft-icon-main:hover { background: var(--cream); border-color: var(--cream); color: var(--brown); }
+.ft a:focus-visible { outline: 3px solid #f58fc0; outline-offset: 3px; border-radius: 6px; }
+
+.ft-copy { display: block; font: 400 13px var(--ui); opacity: .75; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ft-links a, .ft-icon { transition: none; }
+  .ft-icon:hover { transform: none; }
+}

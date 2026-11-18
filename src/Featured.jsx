@@ -48,6 +48,7 @@ export default function Featured({ products, wa }) {
         <div className="jm-items">
           {items.map((p, i) => (
             <article key={p.id} className={`jm-item${i === 1 ? " jm-mid" : ""}${swing ? " jm-swing" : ""}`} style={{ "--d": `${i * 0.18}s` }}>
+              <div className="jm-swinger">
               <span className="jm-pin" aria-hidden="true" />
               <div className="jm-print">
                 <Photo src={p.img} alt={`Tas ${p.name}`} color={p.color} />
@@ -59,6 +60,7 @@ export default function Featured({ products, wa }) {
                     <a className="jm-btn" href={`${wa}%20${encodeURIComponent(p.name)}`}>Pesan</a>
                   </div>
                 </div>
+              </div>
               </div>
             </article>
           ))}
