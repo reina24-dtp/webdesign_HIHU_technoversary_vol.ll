@@ -44,13 +44,6 @@ npm run preview
 
 Hasil build dibuat di folder `dist/`. Perintah preview menampilkan hasil build secara lokal.
 
-## Mengubah konten
-
-- **Nomor WhatsApp:** ubah konstanta `WA` di `src/App.jsx`. Nomor saat ini adalah `+62 819-7659-045`.
-- **Data produk, testimoni, dan FAQ:** ubah konstanta terkait di `src/App.jsx`.
-- **Gambar dan logo:** simpan aset di `public/images/`, lalu gunakan alamat seperti `/images/granova.png`.
-- **Gaya halaman:** aturan utama ada di `src/App.css`; katalog di `src/Katalog.css`; bagian produk pilihan di `src/Jemuran.css`; footer di `src/Footer.css`; dan intro di `src/Opening.css`.
-
 ## Struktur utama
 
 ```text
