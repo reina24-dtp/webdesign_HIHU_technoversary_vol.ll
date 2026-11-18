@@ -7,9 +7,9 @@ import Opening from "./Opening.jsx";
 
 /* ====== GANTI PATH GAMBAR DENGAN ASET KAMU (taruh di folder /public/images) ====== */
 const IMG = {
-  logo: "public/images/granova.png",
-  heroBag: "public/images/hero-asset.png",
-  story: "public/images/about.png",
+  logo: "/images/granova.png",
+  heroBag: "/images/hero-asset.png",
+  story: "/images/about.png",
 };
 
 const NAV_LEFT = [

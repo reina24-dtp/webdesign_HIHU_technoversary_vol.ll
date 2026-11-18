@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import "./katalog.css";
+import "./Katalog.css";
 import { SIZES, rupiah, mulaiDari } from "./Sizes.js";
 
 /* Foto dengan warna cadangan kalau gambar gagal dimuat */
