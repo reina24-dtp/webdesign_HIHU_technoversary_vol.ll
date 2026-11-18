@@ -87,12 +87,7 @@
 @media (max-width: 600px) {
   .jm-section { padding: 56px 6vw 64px; }
   .jm-head { margin-bottom: 44px; }
-  .jm-items { grid-template-columns: 1fr; gap: 26px; }
-  .jm-rope { display: none; }
-  .jm-item, .jm-mid { width: min(100%, 340px); margin: 0 auto; }
-  .jm-item::before { content: ""; position: absolute; top: -.7em; left: 50%; width: 3em; height: 1.3em; transform: translateX(-50%); border-top: 3px solid #d1ae7c; border-radius: 50%; }
-  .jm-swinger { position: relative; z-index: 1; }
-  .jm-print, .jm-mid .jm-print { width: 82%; }
+  .jm-items { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(5px, 2vw, 12px); font-size: clamp(8px, 2.1vw, 13px); }
   .jm-more { margin-top: 48px; }
 }
 @media (prefers-reduced-motion: reduce) {
