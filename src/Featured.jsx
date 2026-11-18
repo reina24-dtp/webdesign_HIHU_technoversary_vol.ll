@@ -39,7 +39,12 @@ export default function Featured({ products, wa }) {
       </div>
 
       <div className="jm-line" ref={stage}>
-        <div className="jm-rope" aria-hidden="true" />
+        <div className="jm-rope" aria-hidden="true">
+          <svg viewBox="0 0 1000 60" preserveAspectRatio="none">
+            <path d="M0 4 C150 4 205 46 500 46 C795 46 850 4 1000 4" fill="none" stroke="#c79a5c" strokeWidth="5" strokeLinecap="round" />
+            <path d="M0 3 C150 3 205 45 500 45 C795 45 850 3 1000 3" fill="none" stroke="#e7c795" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </div>
         <div className="jm-items">
           {items.map((p, i) => (
             <article key={p.id} className={`jm-item${i === 1 ? " jm-mid" : ""}${swing ? " jm-swing" : ""}`} style={{ "--d": `${i * 0.18}s` }}>
