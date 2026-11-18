@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import "./jemuran.css";
+import "./Jemuran.css";
+import { mulaiDari } from "./Sizes.js";
 
 /* Foto dengan warna cadangan kalau gambar gagal dimuat */
 function Photo({ src, alt, color }) {
@@ -39,13 +40,15 @@ export default function Featured({ products, wa }) {
       </div>
 
       <div className="jm-line" ref={stage}>
-        <div className="jm-rope" aria-hidden="true">
-          <svg viewBox="0 0 1000 60" preserveAspectRatio="none">
-            <path d="M0 4 C150 4 205 46 500 46 C795 46 850 4 1000 4" fill="none" stroke="#c79a5c" strokeWidth="5" strokeLinecap="round" />
-            <path d="M0 3 C150 3 205 45 500 45 C795 45 850 3 1000 3" fill="none" stroke="#e7c795" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        </div>
+        <div className="jm-rope" aria-hidden="true" />
         <div className="jm-items">
+          {/* tali melengkung: titik tengah paling turun, jepitan menempel mengikuti lengkungnya */}
+          <div className="jm-rope" aria-hidden="true">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d="M0 0 Q50 200 100 0" className="jm-rope-base" />
+              <path d="M0 0 Q50 200 100 0" className="jm-rope-twist" />
+            </svg>
+          </div>
           {items.map((p, i) => (
             <article key={p.id} className={`jm-item${i === 1 ? " jm-mid" : ""}${swing ? " jm-swing" : ""}`} style={{ "--d": `${i * 0.18}s` }}>
               <div className="jm-swinger">
@@ -56,7 +59,7 @@ export default function Featured({ products, wa }) {
                   <p className="jm-label">{p.label}</p>
                   <h3>{p.name}</h3>
                   <div className="jm-foot">
-                    <span className="jm-price">{p.price}</span>
+                    <span className="jm-price">Mulai {mulaiDari()}</span>
                     <a className="jm-btn" href={`${wa}%20${encodeURIComponent(p.name)}`}>Pesan</a>
                   </div>
                 </div>

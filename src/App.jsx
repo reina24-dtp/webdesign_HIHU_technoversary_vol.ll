@@ -3,6 +3,7 @@ import "./App.css";
 import Featured from "./Featured.jsx";
 import Catalog from "./Catalog.jsx"; 
 import Footer from "./Footer.jsx";           
+import Opening from "./Opening.jsx";
 
 /* ====== GANTI PATH GAMBAR DENGAN ASET KAMU (taruh di folder /public/images) ====== */
 const IMG = {
@@ -47,18 +48,19 @@ const STEPS = [
 
 const TESTIMONIALS = [
   { name: "Kak Ryujin", role: "Mahasiswi", image: "/images/Kak%20Ryujin.jpg", text: "Motifnya lucu banget, dan aku suka karena tasnya dari bahan bekas. Kuat dipakai bawa buku." },
+  { name: "Nadia", role: "Mahasiswi", text: "Motifnya lucu banget, dan aku suka karena tasnya dari bahan bekas. Kuat dipakai bawa buku." },
   { name: "Kak Jojo", role: "Pelanggan", image: "/images/kak%20jojo.jpg", text: "Dipakai buat kado, penerimanya senang. Jahitannya rapi dan ceritanya bagus." },
   { name: "Bu Sari", role: "Guru", text: "Cocok untuk suvenir kegiatan sekolah tentang daur ulang. Anak-anak suka." },
 ];
 
 const FAQ = [
-  { q: "Tasnya terbuat dari apa?", a: "Dari karung bekas beras, tepung, dan gula yang dibersihkan, dijahit, lalu disablon." },
+  { q: "Tasnya terbuat dari apa?", a: "Tas Granova dibuat dari karung kain bekas yang dibersihkan, lalu dijahit kembali menjadi tas serut." },
   { q: "Apakah bisa pesan motif sendiri?", a: "Bisa. Kirim desainmu lewat WhatsApp, kami bantu cek ukuran dan hasil sablonnya." },
   { q: "Berapa lama pengerjaan?", a: "Stok siap kirim 1–2 hari. Pesanan custom sekitar 5–7 hari kerja." },
   { q: "Apakah tas tahan air?", a: "Tidak sepenuhnya tahan air. Hindari hujan deras agar bahan dan sablon awet." },
 ];
 
-const WA = "https://wa.me/6280000000000?text=Halo%20Granova%2C%20aku%20mau%20pesan%20tas";
+const WA = "https://wa.me/628197659045?text=Halo%20Granova%2C%20aku%20mau%20pesan%20tas";
 
 function Img({ src, alt, className, fallback = "#EADFCF" }) {
   const [err, setErr] = useState(false);
@@ -335,16 +337,6 @@ function Faq() {
   );
 }
 
-function Cta() {
-  return (
-    <section className="cta">
-      <h2>Satu karung, satu cerita baru.</h2>
-      <p>Pesan tas serut Granova atau kirim desain motifmu sendiri.</p>
-      <ArrowButton href={WA}>Hubungi Kami</ArrowButton>
-    </section>
-  );
-}
-
 function OrderNow() {
   const repeat = (keyPrefix) => Array.from({ length: 12 }, (_, i) => (
     <span className="order-word" key={`${keyPrefix}-${i}`}>ORDER NOW <i aria-hidden="true">✦</i> GRANOVA</span>
@@ -366,8 +358,10 @@ function OrderNow() {
 
 
 export default function App() {
+  const [showOpening, setShowOpening] = useState(true);
   return (
     <>
+      {showOpening && <Opening onComplete={() => setShowOpening(false)} />}
       <Navbar />
       <main>
         <Hero />
@@ -379,7 +373,6 @@ export default function App() {
         <Testimonials />
         <Faq />
         <OrderNow />
-        <Cta />
       </main>
       <Footer logo={IMG.logo} links={[...NAV_LEFT, ...NAV_RIGHT]} wa={WA} />
     </>
