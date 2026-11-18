@@ -1,0 +1,73 @@
+/* ===== KATALOG ===== */
+.jk-section { padding: 88px 5vw 96px; max-width: 1140px; margin: 0 auto; }
+.jk-head { text-align: center; margin-bottom: 28px; }
+.jk-head h2 { margin: 0; font-family: var(--serif); font-weight: 700; font-size: clamp(32px, 4.6vw, 48px); color: var(--brown); line-height: 1.1; }
+.jk-sub { margin: 8px 0 0; font-family: var(--script); color: var(--pink); font-size: 22px; }
+
+.jk-filter { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.jk-chip {
+  font: 700 14px var(--ui); padding: 9px 18px; border-radius: 999px; cursor: pointer;
+  border: 2px solid var(--brown); background: transparent; color: var(--brown);
+  transition: background .2s, color .2s;
+}
+.jk-chip span { font-weight: 600; opacity: .65; margin-left: 4px; }
+.jk-chip:hover { background: #ecdfcb; }
+.jk-chip.on { background: var(--brown); color: var(--cream); }
+.jk-count { text-align: center; margin: 14px 0 34px; font: 600 13px var(--ui); color: var(--brown); opacity: .7; }
+
+.jk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 28px; }
+
+.jk-card { animation: jk-in .45s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 60ms); }
+@keyframes jk-in { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
+
+.jk-frame { position: relative; border-radius: 30px; padding: 14px; overflow: hidden; }
+.jk-photo { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 20px; transition: transform .4s ease; }
+.jk-card:hover .jk-photo { transform: scale(1.03) rotate(-1deg); }
+
+.jk-stamp {
+  position: absolute; top: 24px; left: 24px; transform: rotate(-4deg);
+  font: 700 17px var(--script); line-height: 1; color: var(--brown);
+  background: var(--cream); border: 2px dashed var(--brown); border-radius: 8px; padding: 6px 12px;
+}
+.jk-go {
+  position: absolute; right: 24px; bottom: 24px; width: 46px; height: 46px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--pink); color: #fff;
+  box-shadow: 0 6px 14px rgba(107, 58, 10, .3); transition: transform .25s, background .2s;
+}
+.jk-go:hover { transform: rotate(45deg) scale(1.06); background: var(--brown); }
+.jk-go:focus-visible, .jk-chip:focus-visible, .jk-custom:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
+
+.jk-card h3 { margin: 14px 4px 0; font-family: var(--serif); font-size: 22px; color: var(--brown); line-height: 1.15; }
+.jk-price { margin: 4px 4px 0; font: 700 14px var(--ui); color: #2f7a5e; }
+
+/* banner desain sendiri: label kosong */
+.jk-custom {
+  grid-column: 1 / -1; display: flex; align-items: center; gap: 22px;
+  background: #efe3d0; color: var(--brown); border: 3px dashed var(--brown); border-radius: 30px;
+  padding: 26px 30px; animation: jk-in .45s cubic-bezier(.2,.8,.2,1) both; animation-delay: .3s;
+}
+.jk-hole { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--cream); box-shadow: inset 0 0 0 4px var(--brown); }
+.jk-custom-text { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.jk-custom-text strong { font: 700 24px var(--serif); }
+.jk-custom-text span { font: 500 15px var(--ui); line-height: 1.5; opacity: .85; }
+.jk-go-static { position: static; flex: none; font-size: 22px; }
+.jk-custom:hover .jk-go-static { transform: rotate(45deg) scale(1.06); background: var(--brown); }
+
+@media (max-width: 900px) { .jk-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) {
+  .jk-section { padding: 56px 5vw 64px; }
+  .jk-grid { gap: 26px 14px; }
+  .jk-frame { border-radius: 22px; padding: 9px; }
+  .jk-photo { border-radius: 15px; }
+  .jk-stamp { top: 16px; left: 16px; font-size: 14px; padding: 4px 8px; }
+  .jk-go { right: 16px; bottom: 16px; width: 38px; height: 38px; }
+  .jk-card h3 { font-size: 17px; }
+  .jk-custom { padding: 20px; gap: 14px; }
+  .jk-hole { display: none; }
+  .jk-custom-text strong { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jk-card, .jk-custom { animation: none; }
+  .jk-photo, .jk-go { transition: none; }
+  .jk-card:hover .jk-photo, .jk-go:hover, .jk-custom:hover .jk-go-static { transform: none; }
+}

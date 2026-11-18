@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./App.css";
+import Featured from "./Featured.jsx";
+import Catalog from "./Catalog.jsx";            
 
 /* ====== GANTI PATH GAMBAR DENGAN ASET KAMU (taruh di folder /public/images) ====== */
 const IMG = {
@@ -124,17 +126,17 @@ function WaveBand() {
     <div className="wave" aria-hidden="true">
       <svg viewBox="0 0 1440 220" preserveAspectRatio="none">
         <defs>
-          <path id="wavePath" d="M-200 120 C 0 40, 200 40, 360 110 S 700 190, 900 110 S 1250 40, 1640 120" />
+          <path id="waveTextPath" d="M-320 120 C-240 90,-80 90,0 120 S160 150,320 120 S480 90,640 120 S800 150,960 120 S1120 90,1280 120 S1440 150,1600 120 S1760 90,1920 120" />
         </defs>
         <path
-          d="M0 90 C 180 10, 340 30, 480 100 S 800 180, 980 100 S 1280 10, 1440 60 L1440 170 C 1300 130, 1160 190, 980 200 S 640 250, 480 190 S 160 90, 0 150 Z"
+          d="M-320 78 C-240 48,-80 48,0 78 S160 108,320 78 S480 48,640 78 S800 108,960 78 S1120 48,1280 78 S1440 108,1600 78 S1760 48,1920 78 L1920 142 C1760 112,1760 112,1600 142 C1440 172,1440 172,1280 142 C1120 112,1120 112,960 142 C800 172,800 172,640 142 C480 112,480 112,320 142 C160 172,160 172,0 142 C-80 112,-240 112,-320 142 Z"
           fill="var(--brown)"
         />
         <text className="wave-text">
-          <textPath href="#wavePath" startOffset="0">
-            <animate attributeName="startOffset" from="0" to="-320" dur="18s" repeatCount="indefinite" />
-            {Array.from({ length: 16 }).map((_, i) => (
-              <tspan key={i} dx="70">Granova</tspan>
+          <textPath href="#waveTextPath" startOffset="0">
+            <animate attributeName="startOffset" from="0" to="-132" dur="8s" repeatCount="indefinite" />
+            {Array.from({ length: 24 }).map((_, i) => (
+              <tspan key={i} dx="52" textLength="80" lengthAdjust="spacingAndGlyphs">Granova</tspan>
             ))}
           </textPath>
         </text>
@@ -177,65 +179,6 @@ function ProductCard({ p }) {
       <h3>{p.name}</h3>
       <p className="card-meta">{p.tag} • {p.price}</p>
     </article>
-  );
-}
-
-function Featured() {
-  const [active, setActive] = useState(1);
-  const [size, setSize] = useState("Sedang");
-  const go = (step) => setActive((current) => (current + step + PRODUCTS.length) % PRODUCTS.length);
-  const product = PRODUCTS[active];
-  return (
-    <section id="produk" className="featured-section">
-      <div className="featured-shell">
-        <div className="featured-heading">
-          <div><span className="featured-kicker">Dari karung jadi kesayangan</span><h2 className="panel-title">Produk Pilihan</h2></div>
-          <p>Motif ceria, dibuat ulang dengan cerita baru.</p>
-        </div>
-        <div className="featured-stage">
-          <div className="featured-orbit" aria-hidden="true" />
-          {[-2, -1, 1, 2].map((offset) => {
-            const side = PRODUCTS[(active + offset + PRODUCTS.length) % PRODUCTS.length];
-            return <button key={`${offset}-${side.id}`} className={`peek-card peek-${offset < 0 ? "left" : "right"} peek-${Math.abs(offset)}`} onClick={() => go(offset)} aria-label={`Lihat ${side.name}`}>
-              <Img src={side.img} alt={`Tas ${side.name}`} className="peek-img" fallback={side.color} />
-              <span className="peek-title">{side.name}</span><span className="peek-meta">{side.tag} · {side.price}</span>
-            </button>;
-          })}
-          <article className="featured-product" key={product.id}>
-            <div className="featured-photo-wrap"><Img src={product.img} alt={`Tas ${product.name}`} className="featured-photo" fallback={product.color} />
-              <button className="carousel-arrow arrow-left" onClick={() => go(-1)} aria-label="Produk sebelumnya">‹</button>
-              <button className="carousel-arrow arrow-right" onClick={() => go(1)} aria-label="Produk berikutnya">›</button>
-            </div>
-            <div className="featured-info"><span className="featured-tag">{product.tag} · Recrafted</span><h3>{product.name}</h3><strong className="featured-price">{product.price}</strong>
-              <label className="size-select">Ukuran tas<select value={size} onChange={(event) => setSize(event.target.value)}><option>Kecil</option><option>Sedang</option><option>Besar</option></select></label>
-              <a className="featured-order" href={`${WA}%20untuk%20produk%20${encodeURIComponent(product.name)}%20ukuran%20${encodeURIComponent(size)}`}>Pesan tas ini <span>↗</span></a>
-            </div>
-          </article>
-        </div>
-        <div className="featured-controls"><div className="featured-dots" aria-label={`Produk ${active + 1} dari ${PRODUCTS.length}`}>{PRODUCTS.map((p, i) => <button key={p.id} className={i === active ? "active" : ""} onClick={() => setActive(i)} aria-label={`Pilih ${p.name}`} />)}</div><span>{String(active + 1).padStart(2, "0")} <i>/</i> {String(PRODUCTS.length).padStart(2, "0")}</span></div>
-      </div>
-    </section>
-  );
-}
-
-function Catalog() {
-  const [tag, setTag] = useState("Semua");
-  const list = tag === "Semua" ? PRODUCTS : PRODUCTS.filter((p) => p.tag === tag);
-  return (
-    <section id="katalog" className="section">
-      <h2 className="section-title">Katalog</h2>
-      <div className="chips" role="tablist" aria-label="Filter katalog">
-        {TAGS.map((t) => (
-          <button key={t} role="tab" aria-selected={tag === t} className={tag === t ? "chip on" : "chip"} onClick={() => setTag(t)}>
-            {t}
-          </button>
-        ))}
-      </div>
-      <div className="grid grid-3">
-        {list.map((p) => <ProductCard key={p.id} p={p} />)}
-      </div>
-      <div className="center"><ArrowButton href={WA}>Pesan lewat WhatsApp</ArrowButton></div>
-    </section>
   );
 }
 
@@ -326,8 +269,8 @@ export default function App() {
         <Hero />
         <WaveBand />
         <Story />
-        <Featured />
-        <Catalog />
+        <Featured products={PRODUCTS} wa={WA} />
+        <Catalog products={PRODUCTS} tags={TAGS} wa={WA} />
         <Care />
         <Testimonials />
         <Faq />
